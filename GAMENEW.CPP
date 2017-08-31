@@ -373,7 +373,65 @@ clrscr();
  gotoxytext(40,6,"3 for cells in the edge and 2 for cells");
  gotoxytext(40,7,"in the corner.");
 
- i21=i;
+ //
+ i--;
+
+ for(;;i++,t++)
+  {
+    if(a1[i]!=1)
+     goto awesome1;
+
+    int p,q;
+    do{
+    gotoxy(1,20);
+    cout<<"\n Player "<<i+1<<"\nEnter the position to place in the form 'x,y'\n";
+    cin>>x>>y;
+    if(x==9&y==9)
+	goto skip;
+    { ofstream file("cor.txt",ios::app);
+     file.put(x+48);
+     file.put(y+48);
+    file.close();
+    }
+    skip:
+    if(x==9&&y==9)
+     exit(0);
+   }while((pl_c[x-1][y-1]!=15)&&(pl_c[x-1][y-1]!=i+2));
+
+    color=i+2;
+
+    player(color);        //all if conditions
+   awesome1:
+   if(i==n-1)
+    i=-1;
+
+
+  if(t>=n)    				//winnnnerrrrr!!!!
+  {int w;
+  for(int l=0;l<4;l++)
+  {
+   w=0,w1=0;
+   for(p=0;p<6;p++)
+    for(q=0;q<6;q++)
+    {
+     if((pl_c[p][q]==l+2)||(pl_c[p][q]==15))   //checking winner
+      w++;
+     if(pl_c[p][q]==l+2)                     //checking dead
+      w1++;
+     }
+     if(w1==0)                  //deleted the player
+      a1[l]--;
+     if(w==36)                   //declaration of awesomness
+      {
+       gotoxy(45,12);
+       cout<<"Player "<<l+1<<" WINS";
+       goto label1;
+      }
+   }
+  }
+  }
+
+// i21=i;
  }//if's brack
 
 
@@ -423,10 +481,10 @@ clrscr();
  for(i = 0 ; i < 6 ; i++)
   for(j = 0 ; j < 6 ; j++)
    graph[i][j]='0';
- }//if brack
 
 
- for(int i=i21;;i++,t++)
+ ofstream file("cor.txt");
+ for(i=0;;i++,t++)
   {
     if(a1[i]!=1)
      goto awesome;
@@ -436,14 +494,16 @@ clrscr();
     gotoxy(1,20);
     cout<<"\n Player "<<i+1<<"\nEnter the position to place in the form 'x,y'\n";
     cin>>x>>y;
-    ofstream file("cor.txt",ios::app);        //saving coordi
-    file.put(x+48);
-    file.put(y+48);
-    file.close();
+    if(x==9&y==9)
+	goto skip2;
+
+     file.put(x+48);
+     file.put(y+48);
 
 
+     skip2:
     if(x==9&&y==9)
-     exit(0);
+     goto ext;
    }while((pl_c[x-1][y-1]!=15)&&(pl_c[x-1][y-1]!=i+2));
 
     color=i+2;
@@ -466,7 +526,7 @@ clrscr();
       w++;
      if(pl_c[p][q]==l+2)                     //checking dead
       w1++;
-     }
+    }
      if(w1==0)                  //deleted the player
       a1[l]--;
      if(w==36)                   //declaration of awesomness
@@ -475,11 +535,15 @@ clrscr();
        cout<<"Player "<<l+1<<" WINS";
        goto label;
       }
-   }
+   }//for
+  }//if(t and n)
   }
-
+  ext:
+ file.close();
+ exit(0);
  }
  label:
+ label1:
  getch();
  return 0;
 }
