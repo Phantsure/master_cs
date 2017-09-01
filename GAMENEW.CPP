@@ -386,7 +386,7 @@ clrscr();
     gotoxy(1,20);
     cout<<"\n Player "<<i+1<<"\nEnter the position to place in the form 'x,y'\n";
     cin>>x>>y;
-    if(x==9&y==9)
+    if(x==9&&y==9||(pl_c[x-1][y-1]!=15)&&(pl_c[x-1][y-1]!=i+2))
 	goto skip;
     { ofstream file("cor.txt",ios::app);
      file.put(x+48);
@@ -494,7 +494,7 @@ clrscr();
     gotoxy(1,20);
     cout<<"\n Player "<<i+1<<"\nEnter the position to place in the form 'x,y'\n";
     cin>>x>>y;
-    if(x==9&y==9)
+    if(x==9&&y==9||(pl_c[x-1][y-1]!=15)&&(pl_c[x-1][y-1]!=i+2))
 	goto skip2;
 
      file.put(x+48);
